@@ -1,0 +1,324 @@
+{
+	"info": {
+		"_postman_id": "0ed73bc8-d7b0-485b-954e-f797e2bd068b",
+		"name": "Test collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "post -Validate Login ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c3920824-3ad9-4d0e-9316-61128a7c8913",
+						"exec": [
+							"var Response = pm.response.json();\r",
+							"pm.environment.set(\"Token\", Response.AccessToken);\r",
+							"\r",
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"//Dynamic Varibale \r",
+							"\r",
+							"var t = pm.environment.get(\"Token\");\r",
+							"\r",
+							"console.log(t)\r",
+							"\r",
+							"pm.test(\"environment\", function () {\r",
+							"    pm.expect(t).to.equal(Response.AccessToken);\r",
+							"});\r",
+							"\r",
+							"//console.log(Response.AccessToken)\r",
+							"\r",
+							"\r",
+							"//pm.globals.set(\"name1\", \"ravi\");\r",
+							"//var t = pm.globals.get(\"name1\");\r",
+							"\r",
+							"//console.log (t);\r",
+							"\r",
+							"\r",
+							"//pm.globals.unset(\"name1\");\r",
+							"pm.test(\" Test -3 @  check for Status code - 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"pm.test(\"Test -4 comtaims username \", function () {\r",
+							"    \r",
+							"   // pm.expect(Response.UserName).to.eql(pm.iterationData.get(\"UserName\"));\r",
+							"   var jsonData = pm.response.json();\r",
+							"    pm.expect(Response.UserName).to.eql(\"administrator\");\r",
+							"//});\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"pm.test(\" Test-5 Contains User UserId\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(Response.UserId).to.eql(1);\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "dbbb446c-32cb-4ac9-b2ad-297687b1b551",
+						"exec": [
+							"pm.environment.set(\"UserName\", \"administrator\");\r",
+							"pm.environment.set(\"Password\", \"123456\");\r",
+							"pm.sendRequest(\"https://postman-echo.com/get\", function (err, response) {\r",
+							"    console.log(response.json());\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Connection",
+						"value": "keep-alive",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*",
+						"disabled": true
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36",
+						"disabled": true
+					},
+					{
+						"key": "Token",
+						"value": "",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Origin",
+						"value": "https://mirapakai-admin.azurewebsites.net",
+						"disabled": true
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "cross-site",
+						"disabled": true
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors",
+						"disabled": true
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty",
+						"disabled": true
+					},
+					{
+						"key": "Referer",
+						"value": "https://mirapakai-admin.azurewebsites.net/",
+						"disabled": true
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"UserName\":\"{{UserName}}\",\r\n    \"Password\":\"{{Password}}\"\r\n    }",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "{{Url}}/api/LoginOperations/ValidateLogin",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"api",
+						"LoginOperations",
+						"ValidateLogin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get - All Users Testing",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "209bedfa-b681-4154-9f76-874541f4b0a4",
+						"exec": [
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Response Code \r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//contains username as \" blogger\"\r",
+							"const jsonData = pm.response.json();\r",
+							"pm.test(\"   test-6\", function () {\r",
+							"     pm.expect(jsonData.UserName).to.eql(\"blogger\");\r",
+							"     pm.expect(jsonData.RoleId).to.eql(2);\r",
+							"\r",
+							"});\r",
+							"\r",
+							"// Response Time \r",
+							"\r",
+							"pm.test(\" test -7Response time is less than 1000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"});\r",
+							"\r",
+							"// Validation\r",
+							"pm.test(\" Test 8 -Body contains Sno\",() => {\r",
+							"  pm.expect(pm.response.text()).to.include(\"SNo\");\r",
+							"});\r",
+							"\r",
+							"//Validate Name \r",
+							"pm.test(\"Test 9\", () => {\r",
+							"\r",
+							"  pm.expect(jsonData.Name).to.eql(\"user2\");\r",
+							"  pm.expect(jsonData.LstRoles[0].SNo).to.eql(2);\r",
+							"\r",
+							"});\r",
+							"\r",
+							"// Validate email address \r",
+							"pm.test(\"Test 10\", () => {\r",
+							"  pm.expect(jsonData.EmailAddress).to.eql(\"raghava@touchoncloud.com\"); \r",
+							" \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Origin",
+						"value": "https://mirapakai-admin.azurewebsites.net"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "cross-site"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Referer",
+						"value": "https://mirapakai-admin.azurewebsites.net/"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7"
+					}
+				],
+				"url": {
+					"raw": "{{Url}}/api/LoginOperations/GetUserById/:UID",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"api",
+						"LoginOperations",
+						"GetUserById",
+						":UID"
+					],
+					"variable": [
+						{
+							"id": "0ae9d9ba-7531-43f3-88e9-06a183c9390e",
+							"key": "UID",
+							"value": "2",
+							"type": "string"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "8f68570a-ca18-41e3-9edc-f2cce00396a7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "ef1dd020-bdef-44a4-8706-1a344b1d403d",
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\" Test-1 Responses must be valid and have a body\", function () {",
+					"     pm.response.to.be.ok;",
+					"     pm.response.to.be.withBody;",
+					"     pm.response.to.be.json;",
+					"});",
+					"",
+					"pm.test(\" Test -2 response should be okay to process\", function () {",
+					"    pm.response.to.not.be.error;",
+					"    //pm.response.to.have.jsonBody(\"\");",
+					"    pm.response.to.not.have.jsonBody(\"error\");",
+					"});",
+					"",
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
